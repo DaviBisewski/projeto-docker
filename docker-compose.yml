@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./app
+    container_name: app-so
+    ports:
+      - "3000:3000"
+    environment:
+      - ALUNO=Davi Bisewski
+    networks:
+      - rede-so
+    depends_on:
+      - db
+    mem_limit: 512m
+
+  db:
+    image: mysql:5.7
+    container_name: db-so
+    environment:
+      MYSQL_ROOT_PASSWORD: senha123
+      MYSQL_DATABASE: banco_so
+    volumes:
+      - volume-so:/var/lib/mysql
+    networks:
+      - rede-so
+    mem_limit: 128m
+
+networks:
+  rede-so:
+    driver: bridge
+
+volumes:
+  volume-so:
